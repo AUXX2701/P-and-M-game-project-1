@@ -1,4 +1,8 @@
 # P-and-M-game-project-1
-This is our first project
-
-You are here! Welcome!
+Hi!
+This is the Game progression:
+Tuesday 16th February:
+-Character Controller
+-FPS movement
+-Jumping
+-Gravity
