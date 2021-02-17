@@ -16,9 +16,17 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
+    public Vector3 Crouch;
+    public Vector3 UnCrouched;
+
     Vector3 velocity;
     bool isGrounded;
 
+    void Start()
+    {
+        Crouch = new Vector3(1f, 0.5f, 1f);
+        UnCrouched = new Vector3(1f, 1.5f, 1f);
+    }
 
     // Update is called once per frame
     void Update()
@@ -30,13 +38,12 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
-
+        //jump
         if(Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpheight * -2f * gravity);
         }
-        //movement
-            //input
+        //basic movement
         float X = Input.GetAxis("Horizontal");
         float Z = Input.GetAxis("Vertical");
 
@@ -47,5 +54,27 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         control.Move(velocity * Time.deltaTime);
+
+        //sprint
+        if(Input.GetKey(KeyCode.Q) == true && Input.GetKey(KeyCode.W) == true && isGrounded)
+        {
+            speed = 20f;
+            gameObject.transform.localScale = UnCrouched;
+
+        }
+        //crouch
+        if (Input.GetKey(KeyCode.LeftControl) == true && Input.GetKey(KeyCode.W) == true && isGrounded)
+        {
+            speed = 7f;
+            gameObject.transform.localScale = Crouch;
+
+        }
+
+        //normal
+        else if (Input.GetKey(KeyCode.W) == true && Input.GetKey(KeyCode.LeftControl) == false && Input.GetKey(KeyCode.Q) == false && isGrounded)
+        {
+            speed = 12f;
+            gameObject.transform.localScale = UnCrouched;
+        }
     }
 }
